@@ -1,14 +1,15 @@
 #include QMK_KEYBOARD_H
 #include "unicode.h"
+#include "emoji.h"
 
 enum alt_keycodes {
     // System
-    U_T_AUTO = SAFE_RANGE, //USB Extra Port Toggle Auto Detect / Always Active
-    U_T_AGCR,              //USB Toggle Automatic GCR control
-    DBG_TOG,               //DEBUG Toggle On / Off
-    DBG_MTRX,              //DEBUG Toggle Matrix Prints
-    DBG_KBD,               //DEBUG Toggle Keyboard Prints
-    DBG_MOU,               //DEBUG Toggle Mouse Prints
+    U_T_AUTO = SAFE_RANGE,  // USB Extra Port Toggle Auto Detect / Always Active
+    U_T_AGCR,               // USB Toggle Automatic GCR control
+    DBG_TOG,                // DEBUG Toggle On / Off
+    DBG_MTRX,               // DEBUG Toggle Matrix Prints
+    DBG_KBD,                // DEBUG Toggle Keyboard Prints
+    DBG_MOU,                // DEBUG Toggle Mouse Prints
     // MD_BOOT,               //Restart into bootloader after hold timeout
 
     // Space Cadet layer switches
@@ -16,21 +17,7 @@ enum alt_keycodes {
     X_RMOD,
 
     // Emoji
-    EM_SMILE,
-    EM_SMIRK,
-    EM_HMM,
-    EM_SHUT,
-    EM_SAD,
-    EM_WORRY,
-    EM_CONF,
-    EM_WELP,
-    EM_CRY,
-    EM_OHNO,
-    EM_THUP,
-    EM_FIST,
-    EM_SHRUG,
-    EM_HEART,
-    EM_DOG,
+    EMOJI_ENUM
 };
 
 // Keybinding macros
@@ -38,6 +25,8 @@ enum alt_keycodes {
 #define XB_ENT RSFT_T(KC_ENT)
 #define XB_SHOT LSFT(LGUI(KC_S))
 #define XB_EMOJ LGUI(KC_DOT)
+
+// clang-format off
 
 // Keymap
 
@@ -191,9 +180,11 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
     // }
 };
 
-#define MODS_SHIFT  (get_mods() & MOD_BIT(KC_LSHIFT) || get_mods() & MOD_BIT(KC_RSHIFT))
-#define MODS_CTRL  (get_mods() & MOD_BIT(KC_LCTL) || get_mods() & MOD_BIT(KC_RCTRL))
-#define MODS_ALT  (get_mods() & MOD_BIT(KC_LALT) || get_mods() & MOD_BIT(KC_RALT))
+// clang-format on
+
+#define MODS_SHIFT (get_mods() & MOD_BIT(KC_LSHIFT) || get_mods() & MOD_BIT(KC_RSHIFT))
+#define MODS_CTRL (get_mods() & MOD_BIT(KC_LCTL) || get_mods() & MOD_BIT(KC_RCTRL))
+#define MODS_ALT (get_mods() & MOD_BIT(KC_LALT) || get_mods() & MOD_BIT(KC_RALT))
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // static uint32_t reset_timer;
@@ -260,18 +251,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         //     return false;
         case RGB_TOG:
             if (record->event.pressed) {
-              switch (rgb_matrix_get_flags()) {
-                case LED_FLAG_ALL: {
-                    rgb_matrix_set_flags(LED_FLAG_NONE);
-                    rgb_matrix_disable_noeeprom();
-                  }
-                  break;
-                default: {
-                    rgb_matrix_set_flags(LED_FLAG_ALL);
-                    rgb_matrix_enable_noeeprom();
-                  }
-                  break;
-              }
+                switch (rgb_matrix_get_flags()) {
+                    case LED_FLAG_ALL: {
+                        rgb_matrix_set_flags(LED_FLAG_NONE);
+                        rgb_matrix_disable_noeeprom();
+                    } break;
+                    default: {
+                        rgb_matrix_set_flags(LED_FLAG_ALL);
+                        rgb_matrix_enable_noeeprom();
+                    } break;
+                }
             }
             return false;
 
@@ -305,142 +294,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
-        // Emoji
-        case EM_SMILE:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("😁");
-                } else {
-                    send_unicode_string("😊");
-                }
-            }
-            return true;
-        case EM_SMIRK:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("😒");
-                } else {
-                    send_unicode_string("😏");
-                }
-            }
-            return true;
-        case EM_HMM:
-            if (record->event.pressed) {
-                send_unicode_string("🤔");
-            }
-            return true;
-        case EM_SHUT:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("😶");
-                } else {
-                    send_unicode_string("😑");
-                }
-            }
-            return true;
-        case EM_SAD:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("🙃");
-                } else {
-                    send_unicode_string("😔");
-                }
-            }
-            return true;
-        case EM_WORRY:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("🙁");
-                } else {
-                    send_unicode_string("😟");
-                }
-            }
-            return true;
-        case EM_CONF:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("😖");
-                } else {
-                    send_unicode_string("😕");
-                }
-            }
-            return true;
-        case EM_WELP:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("🤯");
-                } else {
-                    send_unicode_string("😳");
-                }
-            }
-            return true;
-        case EM_CRY:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("😭");
-                } else {
-                    send_unicode_string("😢");
-                }
-            }
-            return true;
-        case EM_OHNO:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("😱");
-                } else {
-                    send_unicode_string("😮");
-                }
-            }
-            return true;
-        case EM_THUP:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("☝️");
-                } else {
-                    send_unicode_string("👍");
-                }
-            }
-            return true;
-        case EM_FIST:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("✋");
-                } else {
-                    send_unicode_string("✊");
-                }
-            }
-            return true;
-        case EM_SHRUG:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("🤦🏻‍♀️");
-                } else {
-                    send_unicode_string("🤷🏻‍♀️");
-                }
-            }
-            return true;
-        case EM_HEART:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("💕");
-                } else {
-                    send_unicode_string("❤️");
-                }
-            }
-            return true;
-        case EM_DOG:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("🐕");
-                } else {
-                    send_unicode_string("🐶");
-                }
-            }
-            return true;
-
-        default:
-            return true; //Process all other keycodes normally
+            EMOJI_SWITCH(record)
     }
+    return true;
 }
 
 static bool macro_recording = false;

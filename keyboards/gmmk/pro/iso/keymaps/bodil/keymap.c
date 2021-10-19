@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 #include "unicode.h"
+#include "emoji.h"
 
 enum alt_keycodes {
     // Space Cadet layer switches
@@ -23,21 +24,7 @@ enum alt_keycodes {
     X_RMOD,
 
     // Emoji
-    EM_SMILE,
-    EM_SMIRK,
-    EM_HMM,
-    EM_SHUT,
-    EM_SAD,
-    EM_WORRY,
-    EM_CONF,
-    EM_WELP,
-    EM_CRY,
-    EM_OHNO,
-    EM_THUP,
-    EM_FIST,
-    EM_SHRUG,
-    EM_HEART,
-    EM_DOG,
+    EMOJI_ENUM
 };
 
 // Keybinding macros
@@ -347,142 +334,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
-        // Emoji
-        case EM_SMILE:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("😁");
-                } else {
-                    send_unicode_string("😊");
-                }
-            }
-            return true;
-        case EM_SMIRK:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("😒");
-                } else {
-                    send_unicode_string("😏");
-                }
-            }
-            return true;
-        case EM_HMM:
-            if (record->event.pressed) {
-                send_unicode_string("🤔");
-            }
-            return true;
-        case EM_SHUT:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("😶");
-                } else {
-                    send_unicode_string("😑");
-                }
-            }
-            return true;
-        case EM_SAD:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("🙃");
-                } else {
-                    send_unicode_string("😔");
-                }
-            }
-            return true;
-        case EM_WORRY:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("🙁");
-                } else {
-                    send_unicode_string("😟");
-                }
-            }
-            return true;
-        case EM_CONF:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("😖");
-                } else {
-                    send_unicode_string("😕");
-                }
-            }
-            return true;
-        case EM_WELP:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("🤯");
-                } else {
-                    send_unicode_string("😳");
-                }
-            }
-            return true;
-        case EM_CRY:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("😭");
-                } else {
-                    send_unicode_string("😢");
-                }
-            }
-            return true;
-        case EM_OHNO:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("😱");
-                } else {
-                    send_unicode_string("😮");
-                }
-            }
-            return true;
-        case EM_THUP:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("☝️");
-                } else {
-                    send_unicode_string("👍");
-                }
-            }
-            return true;
-        case EM_FIST:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("✋");
-                } else {
-                    send_unicode_string("✊");
-                }
-            }
-            return true;
-        case EM_SHRUG:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("🤦🏻‍♀️");
-                } else {
-                    send_unicode_string("🤷🏻‍♀️");
-                }
-            }
-            return true;
-        case EM_HEART:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("💕");
-                } else {
-                    send_unicode_string("❤️");
-                }
-            }
-            return true;
-        case EM_DOG:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    send_unicode_string("🐕");
-                } else {
-                    send_unicode_string("🐶");
-                }
-            }
-            return true;
-
-        default:
-            return true;  // Process all other keycodes normally
+            EMOJI_SWITCH(record)
     }
+    return true;  // Process all other keycodes normally
 }
 
 static bool macro_recording = false;
