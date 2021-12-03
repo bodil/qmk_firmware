@@ -25,6 +25,7 @@ enum custom_keycodes { ADJUST = SAFE_RANGE, EMOJI_ENUM };
 
 #define LOWER MO(_SYMBOL)
 #define RAISE MO(_UNICODE)
+#define SYSRQ MO(_SYSTEM)
 
 const rgblight_segment_t PROGMEM symbol_layer[]  = RGBLIGHT_LAYER_SEGMENTS({25, 7, HSV_BLUE}, {57, 7, HSV_BLUE});
 const rgblight_segment_t PROGMEM unicode_layer[] = RGBLIGHT_LAYER_SEGMENTS({25, 7, HSV_GREEN}, {57, 7, HSV_GREEN});
@@ -43,58 +44,59 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
    * | Ctrl |   A  |   S  |   D  |   F  |   G  |             |   H  |   J  |   K  |   L  |   ;  |Enter |
    * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
-   * | Shift|   Z  |   X  |   C  |   V  |   B  |   [  |   ]  |   N  |   M  |   ,  |   .  |   /  |Shift |
+   * | Shift|   Z  |   X  |   C  |   V  |   B  |   =  |   -  |   N  |   M  |   ,  |   .  |  Up  |Shift |
    * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
-   * |Symbol| GUI  | Alt  |AltGr | Menu |Ucode |Space |Space |Ucode | Left | Down |  Up  |Right |Symbol|
+   * |Symbol| GUI  | Alt  |AltGr |System|Ucode |Space |Space |   /  |Symbol|Ucode | Left | Down |Right |
    * `-------------------------------------------------------------------------------------------------'
    */
   [_QWERTY] = LAYOUT( \
       KC_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, \
       KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_QUOT, \
       KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,  \
-      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_LBRC, KC_RBRC, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, \
-      LOWER,   KC_LGUI, KC_LALT, KC_RALT, KC_APP,  RAISE,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, LOWER    \
+      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_EQL,  KC_MINS, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_UP,   KC_RSFT, \
+      LOWER,   KC_LGUI, KC_LALT, KC_RALT, SYSRQ,  RAISE,    KC_SPC,  KC_SPC,  KC_SLSH, LOWER,   RAISE,   KC_LEFT, KC_DOWN, KC_RIGHT \
     ),
+
   /* Symbol
    * ,-----------------------------------------.             ,-----------------------------------------.
    * | F1   | F2   | F3   | F4   | F5   | F6   |             | F7   | F8   | F9   | F10  | F11  | F12  |
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |      |   !  |   @  |   {  |   }  |   |  |             |PrtSc |   &  |   *  |   |  |   \  | Del  |
+   * |      | Home |  Up  | End  |      |      |             |PrtSc |   {  |   }  |   [  |   ]  |  `   |
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |      |   #  |   $  |   (  |   )  |   `  |             |      |   _  |   -  |   +  |   =  |      |
+   * |      | Left | Down |Right |      |      |             |      |   _  |   -  |   +  |   =  |      |
    * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
-   * |      |   %  |   ^  |   [  |   ]  |   ~  |  (   |   )  |      |   <  |   >  |   /  |   ?  |      |
+   * |      |      |      |      |      |      |  [   |   ]  |   |  |   \  |      |      | PgUp |      |
    * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
-   * |      |      |      |      |      |      |      |      |      | Home | PgDn | PgUp | End  |      |
+   * |      |      |      |      |      |      |      |      |      |      |      | Home | PgDn | End  |
    * `-------------------------------------------------------------------------------------------------'
    */
   [_SYMBOL] = LAYOUT( \
       KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                     KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  \
-      _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                   KC_PSCR, KC_AMPR, KC_ASTR, KC_PIPE, KC_BSLS, KC_DEL,  \
-      _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                    _______, KC_UNDS, KC_MINS, KC_PLUS, KC_EQL,  _______, \
-      _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, KC_LPRN, KC_RPRN, _______, KC_LT,   KC_GT,   KC_SLSH, KC_QUES, _______, \
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______  \
+      _______, KC_HOME, KC_UP,   KC_END,  _______, _______,                   KC_PSCR, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, KC_GRV,  \
+      _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,                   _______, KC_UNDS, KC_MINS, KC_PLUS, KC_EQL,  _______, \
+      _______, _______, _______, _______, _______, _______, KC_LBRC, KC_RBRC, KC_PIPE, KC_BSLS, _______, _______, KC_PGUP, _______, \
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_END   \
       ),
 
   /* Unicode
    * ,-----------------------------------------.             ,-----------------------------------------.
    * | 😢  | 😔  | 😟  | 😕   | 😮  | 😑  |             | 😊  | 😏  | 🤷🏻‍♀️   | 😳   | 🤔  | Del  |
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | ✊   | 👍  | ❤️  |   Æ  | 🐶   |   Þ  |             |      |      |      |   Ø  |      |      |
+   * | ✊   | 👍  | ❤️  |   Æ  | 🐶  |   Þ  |             |      |      |      |   Ø  |      |      |
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |      |   Å  |      |   Ð  |      |      |             |      |      |      |   Λ  |      |      |
+   * |      |   Å  |      |   Ð  |      |      |             |      |      |  —  |   Λ  |      |      |
    * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
-   * |      |      |      |      |      |      |  (   |  )   |      |      |  —  |   …  |      |      |
+   * |      |      |      |      |      |      |      |  —  |      |      |      |   …  |  ↑   |      |
    * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
-   * |      |      |      |      |      |      | NbSp | NbSp |      |  ←  |      |      |  →  |      |
+   * |      |      |      |      |      |      | NbSp | NbSp |     |      |       |  ←  |  ↓   |  →  |
    * `-------------------------------------------------------------------------------------------------'
    */
   [_UNICODE] = LAYOUT( \
       EM_CRY,  EM_SAD,  EM_WORRY,EM_CONF, EM_OHNO, EM_SHUT,                   EM_SMILE,EM_SMIRK,EM_SHRUG,EM_WELP, EM_HMM,  KC_DEL,  \
       EM_FIST, EM_THUP, EM_HEART,X_AE,    EM_DOG,  X_THORN,                   _______, _______, _______, X_OE,    _______, _______, \
-      _______, X_AA,    _______, X_ETH,   _______, _______,                   _______, _______, _______, X_LMBD,  _______, _______, \
-      _______, _______, _______, _______, _______, KC_LPRN, KC_RPRN, _______, _______, _______, X_DASH,  X_ELLIP, _______, _______, \
-      _______, _______, _______, _______, _______, _______, X_NBSP,  X_NBSP,  _______, X_LARR,  _______, _______, X_RARR,  _______  \
+      _______, X_AA,    _______, X_ETH,   _______, _______,                   _______, _______, X_DASH,  X_LMBD,  _______, _______, \
+      _______, _______, _______, _______, _______, _______, _______, X_DASH,  _______, _______, _______, X_ELLIP, X_UARR,  _______, \
+      _______, _______, _______, _______, _______, _______, X_NBSP,  X_NBSP,  _______, _______, _______, X_LARR,  X_DARR,  X_RARR  \
       ),
 
   /* System (Symbol + Unicode)
@@ -128,7 +130,7 @@ void keyboard_post_init_user() {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    state = update_tri_layer_state(state, _SYMBOL, _UNICODE, _SYSTEM);
+    // state = update_tri_layer_state(state, _SYMBOL, _UNICODE, _SYSTEM);
     rgblight_set_layer_state(0, layer_state_cmp(state, _SYMBOL));
     rgblight_set_layer_state(1, layer_state_cmp(state, _UNICODE));
     rgblight_set_layer_state(2, layer_state_cmp(state, _SYSTEM));
