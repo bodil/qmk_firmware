@@ -1,8 +1,5 @@
 #pragma once
 
-// Defines names for use in layer keycodes and the keymap
-enum layer_names { _QWERTY = 0, _SYMBOL, _UNICODE, _FUNCTION, _SYSTEM };
-
 #define DYNAMIC_MACRO_NO_NESTING
 #define TAPPING_TERM 300
 #define TAPPING_TOGGLE 3
@@ -12,7 +9,7 @@ enum layer_names { _QWERTY = 0, _SYMBOL, _UNICODE, _FUNCTION, _SYSTEM };
 #define RGBLIGHT_LAYERS
 #define RGBLIGHT_LAYERS_OVERRIDE_RGB_OFF
 
-#define IS_COMMAND() (IS_LAYER_ON(_SYSTEM))
+#define IS_COMMAND() (IS_LAYER_ON(4))
 #define MAGIC_KEY_SWITCH_LAYER_WITH_NKEYS true
 
 #ifdef AUDIO_ENABLE

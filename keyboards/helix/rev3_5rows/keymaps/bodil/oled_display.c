@@ -28,7 +28,7 @@
 #include QMK_KEYBOARD_H
 
 // Defines names for use in layer keycodes and the keymap
-enum layer_names { _BASE = 0, _SYMBOL, _UNICODE, _SYSTEM };
+enum layer_names { _BASE = 0, _SYMBOL, _UNICODE, _FUNCTION, _SYSTEM };
 
 #ifdef OLED_DRIVER_ENABLE
 
@@ -52,10 +52,10 @@ void render_status(void) {
     // Host Keyboard Layer Status
     int layer = get_highest_layer(layer_state);
     if (layer == _BASE) {
-        oled_write_P(PSTR("BASE"), true);
+        oled_write_P(PSTR("ASC"), true);
         oled_write_P(PSTR(" "), false);
     } else {
-        oled_write_P(PSTR("BASE "), false);
+        oled_write_P(PSTR("ASC "), false);
     }
     if (layer == _SYMBOL) {
         oled_write_P(PSTR("SYM"), true);
@@ -68,6 +68,12 @@ void render_status(void) {
         oled_write_P(PSTR(" "), false);
     } else {
         oled_write_P(PSTR("UTF "), false);
+    }
+    if (layer == _FUNCTION) {
+        oled_write_P(PSTR("FN"), true);
+        oled_write_P(PSTR(" "), false);
+    } else {
+        oled_write_P(PSTR("FN "), false);
     }
     if (layer == _SYSTEM) {
         oled_write_P(PSTR("SYS"), true);

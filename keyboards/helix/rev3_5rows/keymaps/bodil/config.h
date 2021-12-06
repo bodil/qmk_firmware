@@ -18,6 +18,9 @@
 
 // place overrides here
 
+#define IS_COMMAND() (IS_LAYER_ON(4))
+#define MAGIC_KEY_SWITCH_LAYER_WITH_NKEYS true
+
 #define DYNAMIC_MACRO_NO_NESTING
 #define TAPPING_TERM 300
 #define TAPPING_TOGGLE 3
