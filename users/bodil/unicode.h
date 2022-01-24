@@ -7,6 +7,8 @@ enum unicode_names {
     NDASH,
     ELLIP,
     NBSP,
+    POUND,
+    EURO,
 
     // Maths
     R_ARR,
@@ -33,9 +35,10 @@ enum unicode_names {
     U_OE,
 };
 
-#define X_DASH XP(MDASH, NDASH)        // Em dash, en dash shifted
-#define X_ELLIP X(ELLIP)               // Ellipsis
-#define X_NBSP X(NBSP)                 // Non-breaking space
+#define X_DASH XP(MDASH, NDASH)  // Em dash, en dash shifted
+#define X_ELLIP X(ELLIP)         // Ellipsis
+#define X_NBSP X(NBSP)           // Non-breaking space
+#define X_CASH XP(POUND, EURO)
 #define X_RARR XP(R_ARR, R_DAR)        // Right arrow, double arrow shifted
 #define X_LARR XP(L_ARR, L_DAR)        // Left arrow, double arrow shifted
 #define X_UARR XP(U_ARR, U_DAR)        // Up arrow, double arrow shifted

@@ -1,11 +1,14 @@
 #include QMK_KEYBOARD_H
 #include "unicode.h"
 
+// clang-format off
 const uint32_t PROGMEM unicode_map[] = {
     [MDASH] = 0x2014,
     [NDASH] = 0x2013,
     [ELLIP] = 0x2026,
     [NBSP] = 0x00A0,
+    [POUND] = 0x00A3,
+    [EURO] = 0x20AC,
     [R_ARR] = 0x2192,
     [L_ARR] = 0x2190,
     [U_ARR] = 0x2191,
