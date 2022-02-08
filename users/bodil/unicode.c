@@ -29,4 +29,16 @@ const uint32_t PROGMEM unicode_map[] = {
     [U_AE] = 0xC6,
     [L_OE] = 0xF8,
     [U_OE] = 0xD8,
+    [U_SS] = 0x1E9E,
+    [L_SS] = 0xDF,
+    [U_ENE] = 0xD1,
+    [L_ENE] = 0xF1,
+
+    [C_ACUTE] = 0x301,
+    [C_GRAVE] = 0x300,
+    [C_CIRC] = 0x302,
+    [C_UML] = 0x308,
+    [C_MACR] = 0x304,
+    [C_CEDI] = 0x327,
+    [C_TILDE] = 0x303,
 };

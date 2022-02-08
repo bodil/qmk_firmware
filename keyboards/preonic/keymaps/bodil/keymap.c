@@ -20,7 +20,7 @@
 #include "emoji.h"
 
 // Defines names for use in layer keycodes and the keymap
-enum layer_names { _QWERTY = 0, _SYMBOL, _UNICODE, _FUNCTION, _SYSTEM };
+enum layer_names { _QWERTY = 0, _SYMBOL, _UNICODE, _FUNCTION, _SYSTEM, _COMPOSE };
 
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes { ADJUST = SAFE_RANGE, EMOJI_ENUM };
@@ -29,13 +29,15 @@ enum custom_keycodes { ADJUST = SAFE_RANGE, EMOJI_ENUM };
 #define LOWER MO(_UNICODE)
 #define FN MO(_FUNCTION)
 #define SYSRQ MO(_SYSTEM)
+#define COMPOSE MO(_COMPOSE)
 
 const rgblight_segment_t PROGMEM symbol_layer[]   = RGBLIGHT_LAYER_SEGMENTS({0, 9, HSV_GREEN});
 const rgblight_segment_t PROGMEM unicode_layer[]  = RGBLIGHT_LAYER_SEGMENTS({0, 9, HSV_YELLOW});
 const rgblight_segment_t PROGMEM function_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 9, HSV_BLUE});
 const rgblight_segment_t PROGMEM system_layer[]   = RGBLIGHT_LAYER_SEGMENTS({0, 9, HSV_RED});
+const rgblight_segment_t PROGMEM compose_layer[]  = RGBLIGHT_LAYER_SEGMENTS({0, 9, HSV_PURPLE});
 
-const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(symbol_layer, unicode_layer, function_layer, system_layer);
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(symbol_layer, unicode_layer, function_layer, system_layer, compose_layer);
 
 // clang-format off
 
@@ -87,20 +89,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |  £/€ |      |      |      |      |      |      | Del  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |   Æ  |      |   Þ  |      |      |      |   Ø  |      |      |
+ * |Leader|      |      |   Æ  |      |   Þ  |      |      |      |   Ø  |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |   Å  |      |   Ð  |      |      |      |      |  —  |   Λ  |      |      |
+ * |Cmpose|   Å  |   ẞ  |   Ð  |      |      |      |      |  —  |   Λ  |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |   …  |   ↑  |      |
+ * |      |      |      |      |      |      |   Ñ  |      |      |   …  |   ↑  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |     NbSp    |      |      |  ←  |  ↓   |  →  |
  * `-----------------------------------------------------------------------------------'
  */
 [_UNICODE] = LAYOUT_preonic_grid(
   _______, _______, _______, _______, X_CASH,  _______, _______, _______, _______, _______, _______, KC_DEL,
-  _______, _______, _______, X_AE,    _______, X_THORN, _______, _______, _______, X_OE,    _______, _______,
-  _______, X_AA,    _______, X_ETH,   _______, _______, _______, _______, X_DASH,  X_LMBD,  _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, X_ELLIP, X_UARR,  _______,
+  KC_LEAD, _______, _______, X_AE,    _______, X_THORN, _______, _______, _______, X_OE,    _______, _______,
+  COMPOSE, X_AA,    X_SS,    X_ETH,   _______, _______, _______, _______, X_DASH,  X_LMBD,  _______, _______,
+  _______, _______, _______, _______, _______, _______, X_ENE,   _______, _______, X_ELLIP, X_UARR,  _______,
   _______, _______, _______, _______, _______, X_NBSP,  X_NBSP,  _______, _______, X_LARR,  X_DARR,  X_RARR
 ),
 
@@ -146,6 +148,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
+/* Compose layer
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |   ˜  |      |   ¨  |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |   ´  |      |   ¸  |      |   `  |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |   ^  |      |      |      |   ¯  |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_COMPOSE] = LAYOUT_preonic_grid(
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, XC_TILD, _______, XC_UML,  _______, _______, _______, _______,
+  _______, XC_ACUT, _______, XC_CEDI, _______, XC_GRAV, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, XC_CIRC, _______, _______, _______, XC_MACR, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+),
+
 // /* New layer
 //  * ,-----------------------------------------------------------------------------------.
 //  * |      |      |      |      |      |      |      |      |      |      |      |      |
@@ -182,6 +205,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(1, layer_state_cmp(state, _UNICODE));
     rgblight_set_layer_state(2, layer_state_cmp(state, _FUNCTION));
     rgblight_set_layer_state(3, layer_state_cmp(state, _SYSTEM));
+    rgblight_set_layer_state(4, layer_state_cmp(state, _COMPOSE));
     return state;
 }
 
@@ -189,3 +213,60 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) { EMOJI_SWITCH(record) }
     return true;
 };
+
+#ifdef AUDIO_ENABLE
+float leader_start_song[][2] = SONG(ONE_UP_SOUND);
+#endif
+
+LEADER_EXTERNS();
+
+void leader_start() {
+#ifdef AUDIO_ENABLE
+    PLAY_SONG(leader_start_song);
+#endif
+}
+
+#define SEQ_SINGLE_ACCENT(keycode, acc_code, upper, lower) \
+    SEQ_TWO_KEYS(keycode, acc_code) { send_unicode_string((get_mods() & MOD_MASK_SHIFT) ? upper : lower); }
+
+#define SEQ_ACCENT(keycode, u_acute, l_acute, u_grave, l_grave, u_circ, l_circ, u_uml, l_uml, u_mac, l_mac) \
+    SEQ_SINGLE_ACCENT(keycode, KC_A, u_acute, l_acute)                                                      \
+    SEQ_SINGLE_ACCENT(keycode, KC_G, u_grave, l_grave)                                                      \
+    SEQ_SINGLE_ACCENT(keycode, KC_C, u_circ, l_circ)                                                        \
+    SEQ_SINGLE_ACCENT(keycode, KC_U, u_uml, l_uml)                                                          \
+    SEQ_SINGLE_ACCENT(keycode, KC_M, u_mac, l_mac)
+
+void matrix_scan_user() {
+    LEADER_DICTIONARY() {
+        leading = false;
+        leader_end();
+
+        // Vowels with acute KC_A, grave KC_G, circumflex KC_C, diaeresis/umlaut KC_U, macron KC_M
+        SEQ_ACCENT(KC_A, "Á", "á", "À", "à", "Â", "â", "Ä", "ä", "Ā", "ā")
+        SEQ_ACCENT(KC_E, "É", "é", "È", "è", "Ê", "ê", "Ë", "ë", "Ē", "ē")
+        SEQ_ACCENT(KC_I, "Í", "í", "Ì", "ì", "Î", "î", "Ï", "ï", "Ī", "ī")
+        SEQ_ACCENT(KC_O, "Ó", "ó", "Ò", "ò", "Ô", "ô", "Ö", "Ö", "Ō", "ō")
+        SEQ_ACCENT(KC_U, "Ú", "ú", "Ù", "ù", "Û", "û", "Ü", "ü", "Ū", "ū")
+
+        // Y with acute, circumflex, diaeresis, macron with accent keys as above
+        SEQ_SINGLE_ACCENT(KC_Y, KC_A, "Ý", "ý")
+        SEQ_SINGLE_ACCENT(KC_Y, KC_C, "Ŷ", "ŷ")
+        SEQ_SINGLE_ACCENT(KC_Y, KC_U, "Ÿ", "ÿ")
+        SEQ_SINGLE_ACCENT(KC_Y, KC_M, "Ȳ", "ȳ")
+
+        // &aring;
+        SEQ_SINGLE_ACCENT(KC_A, KC_R, "Å", "å")
+
+        // C with cedilla
+        SEQ_SINGLE_ACCENT(KC_C, KC_C, "Ç", "ç")
+
+        // N with tilde
+        SEQ_SINGLE_ACCENT(KC_N, KC_T, "Ñ", "ñ")
+
+        // Sharp S
+        SEQ_SINGLE_ACCENT(KC_S, KC_S, "ẞ", "ß")
+
+        // L with stroke
+        SEQ_SINGLE_ACCENT(KC_L, KC_S, "Ł", "ł")
+    }
+}

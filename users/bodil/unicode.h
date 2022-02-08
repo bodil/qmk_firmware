@@ -33,6 +33,19 @@ enum unicode_names {
     U_AE,
     L_OE,
     U_OE,
+    U_SS,
+    L_SS,
+    U_ENE,
+    L_ENE,
+
+    // Combining accents
+    C_ACUTE,
+    C_GRAVE,
+    C_CIRC,
+    C_UML,
+    C_MACR,
+    C_CEDI,
+    C_TILDE,
 };
 
 #define X_DASH XP(MDASH, NDASH)  // Em dash, en dash shifted
@@ -49,5 +62,15 @@ enum unicode_names {
 #define X_AA XP(L_AA, U_AA)            // Norwegian Å, shifted capitalised
 #define X_AE XP(L_AE, U_AE)            // Norwegian Æ, shifted capitalised
 #define X_OE XP(L_OE, U_OE)            // Norwegian Ø, shifted capitalised
+#define X_SS XP(L_SS, U_SS)            // German sharp ẞ
+#define X_ENE XP(L_ENE, U_ENE)         // Spanish Ñ with tilde (eñe)
+
+#define XC_ACUT X(C_ACUTE)
+#define XC_GRAV X(C_GRAVE)
+#define XC_CIRC X(C_CIRC)
+#define XC_UML X(C_UML)
+#define XC_MACR X(C_MACR)
+#define XC_CEDI X(C_CEDI)
+#define XC_TILD X(C_TILDE)
 
 #endif
