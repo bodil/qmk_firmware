@@ -19,6 +19,7 @@ const uint32_t PROGMEM unicode_map[] = {
     [D_DAR] = 0x21D3,
     [L_LAMBDA] = 0x03BB,
     [U_LAMBDA] = 0x039B,
+    [FORALL] = 0x2200,
     [L_THORN] = 0xFE,
     [U_THORN] = 0xDE,
     [L_ETH] = 0xF0,

@@ -21,6 +21,7 @@ enum unicode_names {
     D_DAR,
     L_LAMBDA,
     U_LAMBDA,
+    FORALL,
 
     // Intl
     L_THORN,
@@ -64,6 +65,7 @@ enum unicode_names {
 #define X_OE XP(L_OE, U_OE)            // Norwegian Ø, shifted capitalised
 #define X_SS XP(L_SS, U_SS)            // German sharp ẞ
 #define X_ENE XP(L_ENE, U_ENE)         // Spanish Ñ with tilde (eñe)
+#define X_FORALL X(FORALL)             // Forall ∀
 
 #define XC_ACUT X(C_ACUTE)
 #define XC_GRAV X(C_GRAVE)
